@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <style>
+    body {
+      background-image: url('https://siamblockchain.com/wp-content/uploads/2020/12/space-rocket-hdr-d-199532456.jpg.aspx_.jpg'); 
+      background-size: cover; 
+    }
+    .messages-content {
+      overflow-y: auto;
+      max-height: 250px;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://media.glassdoor.com/sqll/7383335/sciastra-squarelogo-1659094776286.png" alt="">
+<section class="avenue-messenger">
+  <div class="menu">
+    <div class="items">
+      <span>
+        <a href="#" title="Minimize">&mdash;</a><br>
+        <a href="#" title="End Chat">&#10005;</a>
+      </span>
+    </div>
+    <div class="button">...</div>
+  </div>
+  <div class="agent-face">
+    <div class="half">
+      <img class="agent circle" src="https://th.bing.com/th/id/OIP.Vx-xhHQvVoW6ImOmInz-4gHaIa?pid=ImgDet&w=204&h=230&c=7&dpr=1.5" alt="Ron">
+    </div>
+
+    </div>
+  <div class="chat">
+    <div class="chat-title">
+      <h1>Scarlett</h1>
+      <h2>Tell me,I guide you</h2>
+    </div>
+    <div class="messages">
+      <div class="messages-content"></div>
+    </div>
+    <div class="message-box">
+      <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+      <button type="submit" class="message-submit">send &#10140;</button>
+ </div>
+  </div>
+</div>
+</section>
+
+<script>
+  $(document).ready(function() {
+    var $messages = $('.messages-content'),
+      i = 0;
+
+    function updateScrollbar() {
+      $messages.scrollTop($messages[0].scrollHeight);
+    }
+
+    function setDate() {
+      var d = new Date();
+      $('<div class="timestamp">' + d.getHours() + ':' + d.getMinutes() + '</div>').appendTo($('.message:last'));
+      $('<div class="checkmark-sent-delivered">&check;</div>').appendTo($('.message:last'));
+      $('<div class="checkmark-read">&check;</div>').appendTo($('.message:last'));
+    }
+
+    function insertMessage(msg) {
+      $('<div class="message message-personal">' + msg + '</div>').appendTo($('.messages-content')).addClass('new');
+      setDate();
+      updateScrollbar();
+      setTimeout(function() {
+        fakeMessage();
+      }, 1000 + (Math.random() * 20) * 100);
+    }
+
+    $('.message-submit').click(function() {
+      var msg = $('.message-input').val();
+      if ($.trim(msg) !== '') {
+        insertMessage(msg);
+        $('.message-input').val('');
+      }
+    });
+
+    $(window).on('keydown', function(e) {
+      if (e.which == 13) {
+        var msg = $('.message-input').val();
+        if ($.trim(msg) !== '') {
+          insertMessage(msg);
+          $('.message-input').val('');
+        }
+        return false;
+      }
+    });
+
+    var Fake = [
+'Hello there, I\'m Scarlett.How can I help you today?',   
+'In March 2021,we started SciAstra from our hostel room and a small youtube channel',
+'At SciAstra,we make students love science & prepare in all 4 subjects.',
+'SciAstra is India\'s top science community for IISER, NEST, ISI, CMI, IACS, and IISC.',
+'Diverse in natural and applied sciences.',
+'Actively cultivates collaborations for innovation and knowledge exchange.',
+'Strategic practices, continuous learning, and cutting-edge R&D.',
+'Through initiatives like educational outreach and STEM sponsorship.',
+'Advance science, solve global challenges, promote interdisciplinary collaboration.',
+'Yes,a robust presence in both scientific publications and media.',
+'Yes, actively organizes public events to disseminate scientific knowledge.',
+'It was a pleasure chatting with you.',
+'Thanks for visiting!',
+      'Bye',
+      ':)'
+    ];
+function fakeMessage() {
+      $('<div class="message loading new"><figure class="avatar"><img src="https://th.bing.com/th/id/OIP.Vx-xhHQvVoW6ImOmInz-4gHaIa?pid=ImgDet&w=204&h=230&c=7&dpr=1.5" /></figure><span></span></div>').appendTo($('.messages-content'));
+      updateScrollbar();
+
+      setTimeout(function() {
+        $('.message.loading').remove();
+        $('<div class="message new"><figure class="avatar"><img src="https://th.bing.com/th/id/OIP.Vx-xhHQvVoW6ImOmInz-4gHaIa?pid=ImgDet&w=204&h=230&c=7&dpr=1.5" /></figure>' + Fake[i] + '</div>').appendTo($('.messages-content')).addClass('new');
+        setDate();
+        updateScrollbar();
+        i++;
+      }, 1000 + (Math.random() * 20) * 100);
+    }
+
+    $('.button').click(function() {
+      $('.menu .items span').toggleClass('active');
+      $('.menu .button').toggleClass('active');
+    });
+  });
+</script>
+</body>
+</html>
